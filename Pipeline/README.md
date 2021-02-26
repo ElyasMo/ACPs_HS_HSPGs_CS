@@ -269,20 +269,20 @@ Functional analysis revlead that Pearson correlation coefficient outperform the 
 
 **Figure 2. Number of enriched terms in GO and KEGG analysis for the first 100 and 500 gene pairs retrived from Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient methods.**
 
-Afterwards, according to the number of enriched terms and their level of significancy (**Figure 3** and **Figure4**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient is the best statistical method to calculate gene-gene correlations in this study.
+Afterwards, according to the number of enriched terms and their level of significancy (**Figure 3** and **Figure4**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations in this study.
 
 ![Fig3](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Dotplot.jpg)
-**Figure 3. The enriched terms in y-axis and adjusted-pvalue in x-axis shows the higher amount of enriched terms in Pearson correlation coefficient merhod.**
+**Figure 3. The enriched terms in y-axis and adjusted-pvalue in x-axis shows the higher amount of enriched terms in Pearson correlation coefficient merhod for the first 500 pirs of gene-gene correlation.**
 
 ![Fig4](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Sup1_KEGG.jpg)
-**Figure 4. The enriched terms in y-axis and number of genes which were enrolled in the enriched terms in x-axis shows the advantage Pearson correlation coefficient merhod.**
+**Figure 4. The KEGG enriched terms in y-axis for the first 100 and 500 gene pairs and number of genes which were enrolled in these enriched terms in x-axis show the advantage of Pearson correlation coefficient method.**
 
 ![Fig5](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Heatplot.jpg)
 **Figure 5. The enriched terms are shown in y-axis and the number of genes which were enrolled in the enriched terms are placed in x-axis. According to the GO analysis, A) is the heatplot of Pearson correlation coefficient for the first five hundered gene-gene corelations. B) is the heatplot of Spearman's rank correlation coefficient for the first five hundered gene-gene corelations. C) is the heatplot of Kendall rank correlation coefficient for the C1) first one hundered gene-gene correlations and c2) first five hundered gene-gene correlation**
 
 ## Extracting HS and CS gene informations
-After comingto conclusion that Pearson correlation coefficient is the best method to comput gene-gene correlations, this calculation was done for all four cancer cell lines.
-Based on the experimentally aproved gene related to HS and CS which were obtained from literture reviewes, all co-expressed genes with these genes were extracted, were filtered based on the FDR<0.05, and were sorted based on the FDR values.
+After coming to conclusion that Pearson correlation coefficient is the best method to comput gene-gene correlations, this calculation was done for all four cancer cell lines.
+Based on the experimentally aproved gene related to HS, HSPGs and CS which were obtained from literture reviewes, all co-expressed genes with these laboratory validated genes were extracted, filtered based on the FDR<0.05, and were sorted based on the FDR values.
 
 ```python
 g1=pe.loc[pe['g1'].isin(['SDC1','SDC2','SDC3','SDC4','GPC1','GPC2', 'GPC3', 'GPC4', 'GPC5', 'GPC6', 'PRCAN', 'AGRN',
@@ -301,7 +301,7 @@ genes=genes[genes['fdr_pe']<=0.05]
 genes=genes.sort_values(by=["fdr_pe"])
 genes.to_csv('genes.csv')
 ```
-Top 200 gene pairs (with lowest FDR) for all available genes which were obtained from the literture was extracted from the "genes" matrix.
+Top 1000 gene pairs (with lowest FDR) for all available genes which were obtained from the literture was extracted from the "genes" matrix.
 
 ```python
 list_genes=['SDC1','SDC2','SDC3','SDC4','GPC1','GPC2', 'GPC3', 'GPC4', 'GPC5', 'GPC6', 'PRCAN', 'AGRN',
@@ -320,14 +320,14 @@ while z<46:
     x=list_genes[z]
     y=genes.loc[genes['g1'].isin([x])]
     q=genes.loc[genes['g2'].isin([x])]
-    y=y.head(100)
-    q=q.head(100)
+    y=y.head(500)
+    q=q.head(500)
     s=pd.DataFrame(y)
     v=pd.DataFrame(q)
     frames = [w, s, v]
     w=pd.concat(frames)
     z=z+1
-w.to_csv('top100_each_genes.csv')
+w.to_csv('top1000_each_genes.csv')
 ```
 Also, top gene-gene correlations for each experimentally aproved gene was extracted seperately in a dataframe.
 
