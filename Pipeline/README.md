@@ -40,8 +40,8 @@ from scipy import stats
 Treated=pd.read_csv("HEPG2_treated.csv")
 Control=pd.read_csv("HEPG2_control.csv")
 
-#Specifying the average value of gene expressions for replicates in the same batch in control group. In LINCS L1000 naming system, LJ00(number) specify the group of perturbagens which 
-would be DMSO for all samples in control group and x(number) detrmines the batch.
+#Specifying the average value of gene expressions for replicates in the same batch in control group. In LINCS L1000 naming system, 
+#LJ00(number) specify the group of perturbagens which would be DMSO for all samples in control group and x(number) detrmines the batch.
 LJP005_Average_x1=Control.loc[:, "LJP005_average_x1"]
 LJP005_Average_x2=Control.loc[:, "LJP005_average_x2"]
 LJP005_Average_x3=Control.loc[:, "LJP005_average_x3"]
@@ -105,7 +105,7 @@ LJP009_x2_list=list(LJP009_x2.columns)
 LJP009_x3_list=list(LJP009_x3.columns)
 
 #LFC Calculation for x1-3 plates in LJP005
-#this is an example for one batch and this computation should be done for all batches indivudally. 
+#This is an example for one batch and this computation should be done for all batches indivudally. 
 m=0
 m=0
 LFC_LJP005_x1=pd.DataFrame()
@@ -120,7 +120,7 @@ for char in LJP005_x1_list:
         m=m+1
 LFC_LJP005_x1.to_excel("LFC_LJP005_x1.xlsx")
 ```
-Accordingly, we will have four matrixes for four cancer cell lines. In rows we can see the gene symbols and in columns we can see the information about purterbagens (LJ00), time point (24h), batches (x), and even wells in each plates as abbteviations (Figure 1).
+Accordingly, we will have four matrixes for four cancer cell lines. In rows we can see the gene symbols and in columns we can see the information about purterbagens (LJ00..), time point (24h), batches (x), and even wells in each plates as abbteviations (Figure 1).
 
 ![LFC](https://github.com/ElyasMo/Thesis_HC_CS/blob/main/LFC_Example.PNG)
                                    **Figure 1: LFC matrix for a cancer cell line**
