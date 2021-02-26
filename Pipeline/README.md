@@ -5,7 +5,7 @@ The schematic view of developed pipeline can bee seen in Figure 1.
 
 ![Fig 1](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Pipeline.jpg)
 **Schematic visualization of developed pipeline. LINCS L1000 provides the opportunity to discover signals from a huge amount of data. 1) control and treated datasets for four cancer cell lines were retrieved from the LINCS L1000 database. 2) The LFC for expression values were computed for all four cancer cells. 3) In order to find a reference statistical method to compute gene-gene correlations, three methods (Pearson, Spearman, Kendell tau) were evaluated. 4) The chosen statistical method to compute gene-gene correlations was applied to all four cancer cell lines. 5) The correlations with experimentally approved HC and CS genes were extracted. 6) As the first filtration step, only common co-expressed genes with experimentally approved HC and CS genes in all four gene-gene correlation dataframes (corresponding to four cancer cells) were considered. 7) Retrieved genes from step 6 and their expression values along all perturbagens were extracted from four matrixes in step 2. 8) The perturbagens which cause up or downregulations in most of selected genes were placed in two separated dataframes; red: downregulated genes, green: upregulated genes. 9) As the second filtration step, perturbagens which jointly cause up or down regulation for the most of selected genes in all four cancer cells were extracted.**
-## Parsing the data
+## 1- Parsing the data
 [Slinky R package](http://bioconductor.org/packages/slinky) was used to retreive the level three of LINCS L1000 gene expression data. Highest dose (10µm) and time points (24h) were considered.
 
 ```R
@@ -23,7 +23,7 @@ write.table(data,"Directory/Name.txt", sep="\t")
 ```
 The control (Cancer cell which is treated with DMSO) and treated (Cancer cell which is treated with various perturbages) data was retreived for MCF7 (human breast adenocarcinoma cell line; ATCC HTB-22), A549 (human non-small cell lung carcinoma cell line; ATCC CCL-185), HePG2 (human hepatocellular carcinoma cell line; ATCC HB-8065), HT29 (human colorectal adenocarcinoma cell line; ATCC HTB-38) cancer cell lines.
  
-## Data manipulation
+## 2- Data manipulation
 To comput the LogFoldChange (LFC) Between control and treated data, [NumPy library](https://numpy.org/) was used.
 
 Example for computing LFC for one cancer cell line:
@@ -127,7 +127,8 @@ Accordingly, we will have four matrixes for four cancer cell lines. In rows we c
 
 ![LFC](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/LFC_Example.png)
                                    **Figure 2: LFC matrix for a cancer cell line**
-## Gene-Gene correlation
+
+## 3- Statistical method evaluation to perform Gene-Gene correlation
 Various methods could be used to compute gene-gene correlation. In this study, we compared Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient. Based on the performance of these methods, one of them was considered as the gene-gene correlation reference method.
 The [SciPy.stats](https://docs.scipy.org/doc/scipy/reference/stats.html) in python3 was used to calculate gene-gene correlations.
 
@@ -211,7 +212,7 @@ df_fdr=pd.DataFrame(fdr)
 df_fdr= pd.concat([fdr_pe, fdr_sp, fdr_ke], axis=1, join='inner')
 pe = pd.concat([symbol,Final, df_fdr], axis=1, join='inner')
 ```
-## Functional analysis to decide which statistical method is the best.
+### Functional analysis to decide which statistical method is the best.
 According to [Kumari et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0050411), the first 100 and 500 gene pairs (based on the lowest FDR) were chosen for functional analysis (both GO and KEGG pathway analysis). The aim was to determine which statistical method can extract more meaningful correlations. To address this, we used [Clustprofiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html) R package. We investigated the method that can produce more enriched terms based on the first 100 and 500 correlated gene pairs.
 
 ```R
@@ -272,8 +273,6 @@ Functional analysis revlead that Pearson correlation coefficient outperform the 
 
 **Figure 3. Number of enriched terms in GO and KEGG analysis for the first 100 and 500 gene pairs retrived from Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient methods.**
 
-Afterwards, according to the number of enriched terms and their level of significancy (**Figure 4** and **Figure5**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations in this study.
-
 ![Fig3](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Dotplot.jpg)
 **Figure 4. The enriched terms in y-axis and adjusted-pvalue in x-axis shows the higher amount of enriched terms in Pearson correlation coefficient merhod for the first 500 pirs of gene-gene correlation.**
 
@@ -283,7 +282,10 @@ Afterwards, according to the number of enriched terms and their level of signifi
 ![Fig5](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Heatplot.jpg)
 **Figure 6. The enriched terms are shown in y-axis and the number of genes which were enrolled in the enriched terms are placed in x-axis. According to the GO analysis, A) is the heatplot of Pearson correlation coefficient for the first five hundered gene-gene corelations. B) is the heatplot of Spearman's rank correlation coefficient for the first five hundered gene-gene corelations. C) is the heatplot of Kendall rank correlation coefficient for the C1) first one hundered gene-gene correlations and c2) first five hundered gene-gene correlation**
 
-## Extracting HS and CS gene informations
+## 4- Applying reference statistical method to all cancer cells  
+According to the number of enriched terms and their level of significancy (**Figure 4** and **Figure5**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations in this study and was applied to all remaining cancer cells.
+
+## 5- Extracting HS and CS gene informations
 After coming to conclusion that Pearson correlation coefficient is the best method to comput gene-gene correlations, this calculation was done for all four cancer cell lines.
 Based on the experimentally aproved gene related to HS, HSPGs and CS which were obtained from literture reviewes, all co-expressed genes with these laboratory validated genes were extracted, filtered based on the FDR<0.05, and were sorted based on the FDR values.
 
@@ -443,9 +445,6 @@ Next step is to choose top 10 common co-expressed genes for each experimentally 
 In order to visualize the pattern of gene expression and changes against various perturbagens, heatmap was provided for each cancer cell line which have genes as rows and perturbagens as columns. Prior to plotting the heatmap, all gene expressions were sorted in rows to distinguish between up and downregulated expression patterns against various perturbagens.
 To do so, first we should retrive the expression profile of the HS, HSPGs and CS genese and their co-expressed genes from the LFC matrixes for all 4 cancer cell lines. This section can be seen as the step 6 in Figure 8.
 
-![Fig 8](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Pipeline.jpg).
-**Schematic visualization of developed pipeline. LINCS L1000 provides the opportunity to discover signals from a huge amount of data. 1) control and treated datasets for four cancer cell lines were retrieved from the LINCS L1000 database. 2) The LFC for expression values were computed for all four cancer cells. 3) In order to find a reference statistical method to compute gene-gene correlations, three methods (Pearson, Spearman, Kendell tau) were evaluated. 4) The chosen statistical method to compute gene-gene correlations was applied to all four cancer cell lines. 5) The correlations with experimentally approved HC and CS genes were extracted. 6) As the first filtration step, only common co-expressed genes with experimentally approved HC and CS genes in all four gene-gene correlation dataframes (corresponding to four cancer cells) were considered. 7) Retrieved genes from step 6 and their expression values along all perturbagens were extracted from four matrixes in step 2. 8) The perturbagens which cause up or downregulations in most of selected genes were placed in two separated dataframes; red: downregulated genes, green: upregulated genes. 9) As the second filtration step, perturbagens which jointly cause up or down regulation for the most of selected genes in all four cancer cells were extracted.**
-
 ```python
 %cd "D:\P.H.D\Thesis\new\Matrixes\main_matrixes"
 A549=pd.read_csv('A549_LFC_total.csv')
@@ -507,10 +506,10 @@ heatmap.2(matrix, col=yb, trace = "none", margins = c(6,10), cexCol =0.1,cexRow 
 Fig 7 represents the effect of all perturbagens on HC and CS genes. Considering that the rows are sorted based on the value of LFC, the perturbagens which cause downregulation are located at the left and the ones which cause upregulation are placed at the right side of the heatmap and accordingly, they can be easily extracted.
 
 ![Fig 7](https://github.com/ElyasMo/Thesis_HC_CS/blob/main/all_heatmap%20(1).jpg)
-**Figure 7. The heatmap plot of the effect of perturbagens on HC and CS gene expression.**
+**Figure 9. The heatmap plot of the effect of perturbagens on HC and CS gene expression.**
 
 In order to find the common perturbagens which cause up or down regulations for HS and CS genes, the most effective drugs were extracted for all four cancer cell lines (Fig 8).
 ![Fig8](https://github.com/ElyasMo/Thesis_HC_CS/blob/main/heatmap1.jpg)
-**Figure 8. all important drugs and/or chemichals which cause up or down regulations in HS and CS genes.**
+**Figure 10. all important drugs and/or chemichals which cause up or down regulations in HS and CS genes.**
 
 Once again, [Venn diagram visualisation tool](https://bioinfogp.cnb.csic.es/tools/venny/) can be used to find common chemichals which cause the same LFC changes. Accordingly, five common perturbagens caused downregulation and 16 made upregulations in all four cancer cell lines.
