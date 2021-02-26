@@ -1,7 +1,10 @@
 
 # Aim
 The aim of this study is to propose new genes and drugs which directly or indirectly play a role in HS, HSPGs and Chondroitin sulfate expansion at the surface of cancer cells.
+The schematic view of developed pipeline can bee seen in Figure 1.
 
+![Fig 1](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Pipeline.jpg)
+**Schematic visualization of developed pipeline. LINCS L1000 provides the opportunity to discover signals from a huge amount of data. 1) control and treated datasets for four cancer cell lines were retrieved from the LINCS L1000 database. 2) The LFC for expression values were computed for all four cancer cells. 3) In order to find a reference statistical method to compute gene-gene correlations, three methods (Pearson, Spearman, Kendell tau) were evaluated. 4) The chosen statistical method to compute gene-gene correlations was applied to all four cancer cell lines. 5) The correlations with experimentally approved HC and CS genes were extracted. 6) As the first filtration step, only common co-expressed genes with experimentally approved HC and CS genes in all four gene-gene correlation dataframes (corresponding to four cancer cells) were considered. 7) Retrieved genes from step 6 and their expression values along all perturbagens were extracted from four matrixes in step 2. 8) The perturbagens which cause up or downregulations in most of selected genes were placed in two separated dataframes; red: downregulated genes, green: upregulated genes. 9) As the second filtration step, perturbagens which jointly cause up or down regulation for the most of selected genes in all four cancer cells were extracted.**
 ## Parsing the data
 [Slinky R package](http://bioconductor.org/packages/slinky) was used to retreive the level three of LINCS L1000 gene expression data. Highest dose (10µm) and time points (24h) were considered.
 
@@ -120,10 +123,10 @@ for char in LJP005_x1_list:
         m=m+1
 LFC_LJP005_x1.to_excel("LFC_LJP005_x1.xlsx")
 ```
-Accordingly, we will have four matrixes for four cancer cell lines. In rows we can see the gene symbols and in columns we can see the information about purterbagens (LJ00..), time point (24h), batches (x), and even wells in each plates as abbteviations (Figure 1).
+Accordingly, we will have four matrixes for four cancer cell lines. In rows we can see the gene symbols and in columns we can see the information about purterbagens (LJ00..), time point (24h), batches (x), and even wells in each plates as abbteviations (Figure 2).
 
 ![LFC](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/LFC_Example.png)
-                                   **Figure 1: LFC matrix for a cancer cell line**
+                                   **Figure 2: LFC matrix for a cancer cell line**
 ## Gene-Gene correlation
 Various methods could be used to compute gene-gene correlation. In this study, we compared Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient. Based on the performance of these methods, one of them was considered as the gene-gene correlation reference method.
 The [SciPy.stats](https://docs.scipy.org/doc/scipy/reference/stats.html) in python3 was used to calculate gene-gene correlations.
@@ -263,22 +266,22 @@ head(summary(ego4))
 barplot(ego4)
 dotplot(ego4)
 ```
-Functional analysis revlead that Pearson correlation coefficient outperform the other methods. According to **Figure 2**, the number of enriched terms in GO and KEGG analysis of first 100 gene pairs depict the better performance of Kendall rank correlation coefficient method while the number of enriched terms for the first 500 gene pairs showed the advantage of Pearson correlation coefficient and Spearman's rank correlation coefficient was in the third place out of three methods.
+Functional analysis revlead that Pearson correlation coefficient outperform the other methods. According to **Figure 3**, the number of enriched terms in GO and KEGG analysis of first 100 gene pairs depict the better performance of Kendall rank correlation coefficient method while the number of enriched terms for the first 500 gene pairs showed the advantage of Pearson correlation coefficient and Spearman's rank correlation coefficient was in the third place out of three methods.
 
 ![correlation](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Enriched%20terms.png)
 
-**Figure 2. Number of enriched terms in GO and KEGG analysis for the first 100 and 500 gene pairs retrived from Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient methods.**
+**Figure 3. Number of enriched terms in GO and KEGG analysis for the first 100 and 500 gene pairs retrived from Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient methods.**
 
-Afterwards, according to the number of enriched terms and their level of significancy (**Figure 3** and **Figure4**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations in this study.
+Afterwards, according to the number of enriched terms and their level of significancy (**Figure 4** and **Figure5**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations in this study.
 
 ![Fig3](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Dotplot.jpg)
-**Figure 3. The enriched terms in y-axis and adjusted-pvalue in x-axis shows the higher amount of enriched terms in Pearson correlation coefficient merhod for the first 500 pirs of gene-gene correlation.**
+**Figure 4. The enriched terms in y-axis and adjusted-pvalue in x-axis shows the higher amount of enriched terms in Pearson correlation coefficient merhod for the first 500 pirs of gene-gene correlation.**
 
 ![Fig4](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Sup1_KEGG.jpg)
-**Figure 4. The KEGG enriched terms in y-axis for the first 100 and 500 gene pairs and number of genes which were enrolled in these enriched terms in x-axis show the advantage of Pearson correlation coefficient method.**
+**Figure 5. The KEGG enriched terms in y-axis for the first 100 and 500 gene pairs and number of genes which were enrolled in these enriched terms in x-axis show the advantage of Pearson correlation coefficient method.**
 
 ![Fig5](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Heatplot.jpg)
-**Figure 5. The enriched terms are shown in y-axis and the number of genes which were enrolled in the enriched terms are placed in x-axis. According to the GO analysis, A) is the heatplot of Pearson correlation coefficient for the first five hundered gene-gene corelations. B) is the heatplot of Spearman's rank correlation coefficient for the first five hundered gene-gene corelations. C) is the heatplot of Kendall rank correlation coefficient for the C1) first one hundered gene-gene correlations and c2) first five hundered gene-gene correlation**
+**Figure 6. The enriched terms are shown in y-axis and the number of genes which were enrolled in the enriched terms are placed in x-axis. According to the GO analysis, A) is the heatplot of Pearson correlation coefficient for the first five hundered gene-gene corelations. B) is the heatplot of Spearman's rank correlation coefficient for the first five hundered gene-gene corelations. C) is the heatplot of Kendall rank correlation coefficient for the C1) first one hundered gene-gene correlations and c2) first five hundered gene-gene correlation**
 
 ## Extracting HS and CS gene informations
 After coming to conclusion that Pearson correlation coefficient is the best method to comput gene-gene correlations, this calculation was done for all four cancer cell lines.
@@ -362,11 +365,11 @@ while z<46:
     w.to_csv(list_csv[z])
     z=z+1
 ```
-In order to discover common co-expressed genes in all four cancer cell lines, it is necessary to know co-expressed genes with laboratory validated genes in all four cancer cell lines. Accordingly, the 32 out of 46 HS, HSPGs and CS experimentally aproved genes which were available in our dataset were considered for this analysis and 32 dataframes (one for each gene) were prepared which included four coulumns for significantly co-expressed genes in four cancer cell lines (sorted basedon FDR) and four related FDR columns (Figure 6 shows an example of this dataframe for AGRN gene).
+In order to discover common co-expressed genes in all four cancer cell lines, it is necessary to know co-expressed genes with laboratory validated genes in all four cancer cell lines. Accordingly, the 32 out of 46 HS, HSPGs and CS experimentally aproved genes which were available in our dataset were considered for this analysis and 32 dataframes (one for each gene) were prepared which included four coulumns for significantly co-expressed genes in four cancer cell lines (sorted basedon FDR) and four related FDR columns (Figure 7 shows an example of this dataframe for AGRN gene).
 
-![Fig6](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Instance_AGRN_gene_assosiation.jpg)
+![Fig7](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Instance_AGRN_gene_assosiation.jpg)
 
-**Figure 6. An instance of how the mentioned dataframe lookslike. The dataframe is prepared for AGRN gene and its gene-gene correlation in all four cancers with FDR values are included. Common genes in all four cancer cells is desirable.**
+**Figure 7. An instance of how the mentioned dataframe lookslike. The dataframe is prepared for AGRN gene and its gene-gene correlation in all four cancers with FDR values are included. Common genes in all four cancer cells is desirable.**
 
 ```python
 list_csv=['SDC2.csv','SDC3.csv','SDC4.csv','GPC1.csv', 'GPC3.csv', 'GPC4.csv', 'GPC5.csv', 'AGRN.csv',
@@ -433,12 +436,15 @@ while z<32:
 ```
 To investigate the common co-expressed genes for each HS and CS genes in all four cancer cell lines a [Venn diagram visualisation tool](https://bioinfogp.cnb.csic.es/tools/venny/) was used.
 
-![Fig 7](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Example.png)
-**Figure 7. An instance on how to find the common co-expressed genes with each HC and CS defined gene in all four cancer cell lines. Accordingly, 2 and 137 common co-expressed genes with AGRN, and B3GAT3 genes in all four cancer cell lines can be seen.**
+![Fig 8](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Example.png)
+**Figure 8. An instance on how to find the common co-expressed genes with each HC and CS defined gene in all four cancer cell lines. Accordingly, 2 and 137 common co-expressed genes with AGRN, and B3GAT3 genes in all four cancer cell lines can be seen.**
 
-Next step is to choose top 10 coexpressed genes for each experimentally aproved gene (if available).
+Next step is to choose top 10 common co-expressed genes for each experimentally aproved gene (if available).
 In order to visualize the pattern of gene expression and changes against various perturbagens, heatmap was provided for each cancer cell line which have genes as rows and perturbagens as columns. Prior to plotting the heatmap, all gene expressions were sorted in rows to distinguish between up and downregulated expression patterns against various perturbagens.
-To do so, first we should retrive the expression profile of the HS and CS genese and their coexpressed genes from the LFC matrixes for all 4 cancer cell lines.
+To do so, first we should retrive the expression profile of the HS, HSPGs and CS genese and their co-expressed genes from the LFC matrixes for all 4 cancer cell lines. This section can be seen as the step 6 in Figure 8.
+
+![Fig 8](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Pipeline.jpg).
+**Schematic visualization of developed pipeline. LINCS L1000 provides the opportunity to discover signals from a huge amount of data. 1) control and treated datasets for four cancer cell lines were retrieved from the LINCS L1000 database. 2) The LFC for expression values were computed for all four cancer cells. 3) In order to find a reference statistical method to compute gene-gene correlations, three methods (Pearson, Spearman, Kendell tau) were evaluated. 4) The chosen statistical method to compute gene-gene correlations was applied to all four cancer cell lines. 5) The correlations with experimentally approved HC and CS genes were extracted. 6) As the first filtration step, only common co-expressed genes with experimentally approved HC and CS genes in all four gene-gene correlation dataframes (corresponding to four cancer cells) were considered. 7) Retrieved genes from step 6 and their expression values along all perturbagens were extracted from four matrixes in step 2. 8) The perturbagens which cause up or downregulations in most of selected genes were placed in two separated dataframes; red: downregulated genes, green: upregulated genes. 9) As the second filtration step, perturbagens which jointly cause up or down regulation for the most of selected genes in all four cancer cells were extracted.**
 
 ```python
 %cd "D:\P.H.D\Thesis\new\Matrixes\main_matrixes"
