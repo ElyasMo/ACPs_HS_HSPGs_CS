@@ -265,11 +265,11 @@ dotplot(ego4)
 ```
 Functional analysis revlead that Pearson correlation coefficient outperform the other methods. According to **Figure 2**, the number of enriched terms in GO and KEGG analysis of first 100 gene pairs depict the better performance of Kendall rank correlation coefficient method while the number of enriched terms for the first 500 gene pairs showed the advantage of Pearson correlation coefficient and Spearman's rank correlation coefficient was in the third place out of three methods.
 
-![correlation](https://github.com/ElyasMo/Thesis_HC_CS/blob/main/Enriched%20terms.PNG)
+![correlation](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Enriched%20terms.png)
 
-**Figure 2. Number of enriched terms in GO and KEGG analysis of first 100 and 500 gene pairs retrived from Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient methods.**
+**Figure 2. Number of enriched terms in GO and KEGG analysis for the first 100 and 500 gene pairs retrived from Spearman's rank correlation coefficient, Pearson correlation coefficient, and Kendall rank correlation coefficient methods.**
 
-Besides, according to the number of enriched terms and their level of significancy (**Figure 3** and **Figure4**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient is the best statistical method to calculate gene-gene correlations in this study.
+Afterwards, according to the number of enriched terms and their level of significancy (**Figure 3** and **Figure4**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient is the best statistical method to calculate gene-gene correlations in this study.
 
 ![Fig3](https://github.com/ElyasMo/Thesis_HC_CS/blob/main/Dotplot.jpg)
 **Figure 3. The enriched terms in y-axis and adjusted-pvalue in x-axis shows the higher amount of enriched terms in Pearson correlation coefficient merhod.**
