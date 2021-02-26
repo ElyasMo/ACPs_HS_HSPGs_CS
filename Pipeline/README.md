@@ -366,7 +366,7 @@ In order to discover common co-expressed genes in all four cancer cell lines, it
 
 ![Fig6](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Instance_AGRN_gene_assosiation.jpg)
 
-**Figure 6. An instance of how the mentioned dataframe lookslike. The dataframe is prepared for AGRN gene and its gene-gene correlation in all four cancers with FDR values are included. Common genes in all four cancer cells is desirable. **
+**Figure 6. An instance of how the mentioned dataframe lookslike. The dataframe is prepared for AGRN gene and its gene-gene correlation in all four cancers with FDR values are included. Common genes in all four cancer cells is desirable.**
 
 ```python
 list_csv=['SDC2.csv','SDC3.csv','SDC4.csv','GPC1.csv', 'GPC3.csv', 'GPC4.csv', 'GPC5.csv', 'AGRN.csv',
@@ -432,11 +432,12 @@ while z<32:
     z=z+1
 ```
 To investigate the common co-expressed genes for each HS and CS genes in all four cancer cell lines a [Venn diagram visualisation tool](https://bioinfogp.cnb.csic.es/tools/venny/) was used.
-![Fig 6](https://github.com/ElyasMo/Thesis_HC_CS/blob/main/Example.png)
-**Figure 6. An instance on how to find the common co-expressed genes with each HC and CS defined gene in all four cancer cell lines. Accordingly, 2 and 137 common co-expressed genes with AGRN, and B3GAT3 genes in all four cancer cell lines can be seen.**
+
+![Fig 7](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Example.png)
+**Figure 7. An instance on how to find the common co-expressed genes with each HC and CS defined gene in all four cancer cell lines. Accordingly, 2 and 137 common co-expressed genes with AGRN, and B3GAT3 genes in all four cancer cell lines can be seen.**
 
 Next step is to choose top 10 coexpressed genes for each experimentally aproved gene (if available).
-In order to visualize the pattern of gene expression and changes against various perturbagens a heatmap was provided for each cancer cell line which have genes as rows and perturbagens as columns. Prior to plotting the heatmap, all gene expressions were sorted in rows to distinguish between up and downregulated expression patterns against various perturbagens.
+In order to visualize the pattern of gene expression and changes against various perturbagens, heatmap was provided for each cancer cell line which have genes as rows and perturbagens as columns. Prior to plotting the heatmap, all gene expressions were sorted in rows to distinguish between up and downregulated expression patterns against various perturbagens.
 To do so, first we should retrive the expression profile of the HS and CS genese and their coexpressed genes from the LFC matrixes for all 4 cancer cell lines.
 
 ```python
