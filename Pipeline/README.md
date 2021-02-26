@@ -1,6 +1,6 @@
 
 # Aim
-The aim of this study is to find new genes and drugs which directly or indirectly play a role in Heparan sulfate and Chondroitin sulfate expansion at the surface of cancer cells
+The aim of this study is to propose new genes and drugs which directly or indirectly play a role in HS, HSPGs and Chondroitin sulfate expansion at the surface of cancer cells
 
 ## Parsing the data
 [Slinky R package](http://bioconductor.org/packages/slinky) was used to retreive the level three of LINCS L1000 gene expression data. Highest dose (10µm) and time points (24h) were considered.
