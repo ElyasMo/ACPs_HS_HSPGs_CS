@@ -129,7 +129,7 @@ Various methods could be used to compute gene-gene correlation. In this study, w
 The [SciPy.stats](https://docs.scipy.org/doc/scipy/reference/stats.html) in python3 was used to calculate gene-gene correlations.
 
 ```Python
-#an example of calculating gen-gene correlation for one cancer cell line
+#An example of calculating gen-gene correlation for one cancer cell line
 from scipy.stats import pearsonr
 from scipy.stats import spearmanr
 from scipy.stats import kendalltau
@@ -143,7 +143,7 @@ pro=pro.rename(index={"Sep-2":"Sptin-2","Mar-6":"MACHF6","Mar-7":"MACHF7","Sep-8
 pro=pro.dropna()
 
 symbol=pro1['gene symbol']
-#preparingthe gene-gene symbol pairs
+#Preparing the gene-gene symbol pairs.
 
 xInds = []
 yInds = []
@@ -153,14 +153,16 @@ for i in range(len(pro.index)):
         yInds.append(symbol[j]) 
 symbol={'g1':xInds, 'g2':yInds}
 symbol=pd.DataFrame(symbol)
-$preparing the gene-gene indexes for the correlatio method
+
+#Preparing the gene-gene indexes for the correlation method.
 xInds = []
 yInds = []
 for i in range(len(pro.index)):
     for j in range(i+1, len(pro.index)):
         xInds.append(i)
-        yInds.append(j) 
-#the gene-gene correlation computation        
+        yInds.append(j)
+        
+#The gene-gene correlation computation:
 z=0
 Rlist_sp = []
 Plist_sp = []
@@ -191,7 +193,7 @@ Final=pd.concat([G1, G2, R_sp, R_pe, R_ke P_sp, P_pe, P_ke], axis=1)
 np.savetxt('out_gg_A549.txt', Final.values, fmt='%s', delimiter='\t') 
 
 #False discovery rate computation
-#an example for calculating FDR based on one Pvalue (peP). The same procedure will be followed for other Pvalues
+#An example for calculating FDR based on one Pvalue (peP). The same procedure will be followed for other Pvalues.
 df_fdr=pd.DataFrame()
 x=0
 p_vals=Final['peP']
