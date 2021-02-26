@@ -283,11 +283,11 @@ Functional analysis revlead that Pearson correlation coefficient outperform the 
 **Figure 6. The enriched terms are shown in y-axis and the number of genes which were enrolled in the enriched terms are placed in x-axis. According to the GO analysis, A) is the heatplot of Pearson correlation coefficient for the first five hundered gene-gene corelations. B) is the heatplot of Spearman's rank correlation coefficient for the first five hundered gene-gene corelations. C) is the heatplot of Kendall rank correlation coefficient for the C1) first one hundered gene-gene correlations and c2) first five hundered gene-gene correlation**
 
 ## 4- Applying reference statistical method to all cancer cells  
-According to the number of enriched terms and their level of significancy (**Figure 4** and **Figure5**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations in this study and was applied to all remaining cancer cells.
+According to the number of enriched terms and their level of significancy (**Figure 4**, **Figure5** and **Figure6**), and also number of genes enrolled in enriched terms, Pearson correlation coefficient was introduced as the best statistical method to calculate gene-gene correlations and was applied to all remaining cancer cells.
 
-## 5- Extracting HS and CS gene informations
-After coming to conclusion that Pearson correlation coefficient is the best method to comput gene-gene correlations, this calculation was done for all four cancer cell lines.
-Based on the experimentally aproved gene related to HS, HSPGs and CS which were obtained from literture reviewes, all co-expressed genes with these laboratory validated genes were extracted, filtered based on the FDR<0.05, and were sorted based on the FDR values.
+## 5- Extracting HS, HSPGs and CS gene informations
+After coming to conclusion that Pearson correlation coefficient is the best statistical method to comput gene-gene correlations, this calculation was done for all four cancer cell lines.
+According to the experimentally aproved genes related to HS, HSPGs and CS which were obtained from literture reviewes, all co-expressed genes with these laboratory validated genes were extracted, filtered based on the FDR<0.05, and were sorted based on the FDR values.
 
 ```python
 g1=pe.loc[pe['g1'].isin(['SDC1','SDC2','SDC3','SDC4','GPC1','GPC2', 'GPC3', 'GPC4', 'GPC5', 'GPC6', 'PRCAN', 'AGRN',
@@ -306,7 +306,7 @@ genes=genes[genes['fdr_pe']<=0.05]
 genes=genes.sort_values(by=["fdr_pe"])
 genes.to_csv('genes.csv')
 ```
-Top 1000 gene pairs (with lowest FDR) for all available genes which were obtained from the literture was extracted from the "genes" matrix.
+Top 1000 gene pairs (with lowest FDR) for all available genes which were obtained from the literture were extracted from the "genes" matrix which includes all desirable gene-gene correlations.
 
 ```python
 list_genes=['SDC1','SDC2','SDC3','SDC4','GPC1','GPC2', 'GPC3', 'GPC4', 'GPC5', 'GPC6', 'PRCAN', 'AGRN',
@@ -367,6 +367,7 @@ while z<46:
     w.to_csv(list_csv[z])
     z=z+1
 ```
+## 6- Finding common co-expressed gene for each experimentally aproved HS, HSPGs, and CS gene
 In order to discover common co-expressed genes in all four cancer cell lines, it is necessary to know co-expressed genes with laboratory validated genes in all four cancer cell lines. Accordingly, the 32 out of 46 HS, HSPGs and CS experimentally aproved genes which were available in our dataset were considered for this analysis and 32 dataframes (one for each gene) were prepared which included four coulumns for significantly co-expressed genes in four cancer cell lines (sorted basedon FDR) and four related FDR columns (Figure 7 shows an example of this dataframe for AGRN gene).
 
 ![Fig7](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Instance_AGRN_gene_assosiation.jpg)
@@ -441,6 +442,7 @@ To investigate the common co-expressed genes for each HS and CS genes in all fou
 ![Fig 8](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Example.png)
 **Figure 8. An instance on how to find the common co-expressed genes with each HC and CS defined gene in all four cancer cell lines. Accordingly, 2 and 137 common co-expressed genes with AGRN, and B3GAT3 genes in all four cancer cell lines can be seen.**
 
+## 7- Heatmap of the gene expression pattern of candidate gene agains random perturbagens
 Next step is to choose top 10 common co-expressed genes for each experimentally aproved gene (if available).
 In order to visualize the pattern of gene expression and changes against various perturbagens, heatmap was provided for each cancer cell line which have genes as rows and perturbagens as columns. Prior to plotting the heatmap, all gene expressions were sorted in rows to distinguish between up and downregulated expression patterns against various perturbagens.
 To do so, first we should retrive the expression profile of the HS, HSPGs and CS genese and their co-expressed genes from the LFC matrixes for all 4 cancer cell lines. This section can be seen as the step 6 in Figure 8.
@@ -513,3 +515,6 @@ In order to find the common perturbagens which cause up or down regulations for 
 **Figure 10. all important drugs and/or chemichals which cause up or down regulations in HS and CS genes.**
 
 Once again, [Venn diagram visualisation tool](https://bioinfogp.cnb.csic.es/tools/venny/) can be used to find common chemichals which cause the same LFC changes. Accordingly, five common perturbagens caused downregulation and 16 made upregulations in all four cancer cell lines.
+
+## The results from step 8 and 9 are presented in the article.
+It is hypothesized that the perturbagens which cause dowregulation in HS, HSPGs and CS genes, might be a good candidate for synergitstic studies with anti-cancer peptides (ACPs). Because one of the obstacles on way of ACPs functionality is some cell surface components namely HS, HSPGs, and CS.
