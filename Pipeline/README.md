@@ -362,7 +362,11 @@ while z<46:
     w.to_csv(list_csv[z])
     z=z+1
 ```
-In order to discover common co-expressed genes with predefined genes in all four cancer cell lines, it is necessary to have co-expressed genes with each predefined gene for all four cancer cell lines in a dataframe. Accordingly, the 32 out of 46 HS and CS experimentally aproved genes which are available in our dataset was considered for this analysis and 32 dataframes (one for each gene) were prepared which includes four coulumns for significantly co-expressed genes in four cancer cell lines (sorted basedon FDR) and four related FDR columns.
+In order to discover common co-expressed genes in all four cancer cell lines, it is necessary to know co-expressed genes with laboratory validated genes in all four cancer cell lines. Accordingly, the 32 out of 46 HS, HSPGs and CS experimentally aproved genes which were available in our dataset were considered for this analysis and 32 dataframes (one for each gene) were prepared which included four coulumns for significantly co-expressed genes in four cancer cell lines (sorted basedon FDR) and four related FDR columns (Figure 6 shows an example of this dataframe for AGRN gene).
+
+![Fig6](https://github.com/ElyasMo/ACPs_HS_HSPGs_CS/blob/main/Figures/Instance_AGRN_gene_assosiation.jpg)
+
+**Figure 6. An instance of how the mentioned dataframe lookslike. The dataframe is prepared for AGRN gene and its gene-gene correlation in all four cancers with FDR values are included. Common genes in all four cancer cells is desirable. **
 
 ```python
 list_csv=['SDC2.csv','SDC3.csv','SDC4.csv','GPC1.csv', 'GPC3.csv', 'GPC4.csv', 'GPC5.csv', 'AGRN.csv',
